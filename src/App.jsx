@@ -1,14 +1,14 @@
-import "./App.css";
-import "./index.css";
+import './App.css';
+import './index.css';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
-import { TwitterPicker } from "react-color";
-import ContentEditable from "react-contenteditable";
+import { TwitterPicker } from 'react-color';
+import ContentEditable from 'react-contenteditable';
 
 function App() {
-  const [color, setColor] = useState("#FFF033");
-  const [html, setHtml] = useState("");
+  const [color, setColor] = useState('#FFF033');
+  const [html, setHtml] = useState('');
   const [offsets, setOffsets] = useState([]);
   const [selectedLine, setSelectedLine] = useState(0);
   const editorRef = useRef();
@@ -16,9 +16,9 @@ function App() {
   const mapHTML = (text) => {
     if (!text || text.trim().length === 0) return text;
     return text
-      .split(" ")
-      .map((t) => "<span class='word'>" + boldWord(t) + " </span>")
-      .join("");
+      .split(' ')
+      .map((t) => "<span class='word'>" + boldWord(t) + ' </span>')
+      .join('');
   };
 
   const boldWord = (word) => {
@@ -40,18 +40,18 @@ function App() {
   };
 
   function handleChange(e) {
-    let tmp = document.createElement("DIV");
+    let tmp = document.createElement('DIV');
     tmp.innerHTML = e.target.value;
-    let plainText = tmp.textContent || tmp.innerText || "";
+    let plainText = tmp.textContent || tmp.innerText || '';
     setHtml(
       plainText
         .split(/(\s+)/)
         .filter((c) => !!c.trim())
-        .join(" ")
+        .join(' ')
     );
   }
   useEffect(() => {
-    let words = document.getElementsByClassName("word");
+    let words = document.getElementsByClassName('word');
     let offsets = [];
     for (let i = 0; i < words?.length; i++) {
       const element = words[i];
@@ -60,11 +60,10 @@ function App() {
     let uniqueOffsets = [...new Set(offsets)];
     setOffsets(uniqueOffsets);
     if (!html) setSelectedLine(-1);
-    
   }, [html]);
 
   useEffect(() => {
-    let words = document.getElementsByClassName("word");
+    let words = document.getElementsByClassName('word');
     for (let i = 0; i < words?.length; i++) {
       const element = words[i];
       if (element.offsetTop === offsets[selectedLine])
@@ -72,26 +71,23 @@ function App() {
     }
   });
   const handleKeyPress = (event) => {
-    if (event.key === "ArrowDown") {
+    if (event.key === 'ArrowDown') {
       if (selectedLine + 2 <= offsets.length) setSelectedLine(selectedLine + 1);
     }
-    if (event.key === "ArrowUp") {
+    if (event.key === 'ArrowUp') {
       if (selectedLine - 1 >= 0) setSelectedLine(selectedLine - 1);
     }
   };
   return (
     <div>
-      <div className="container mx-auto flex flex-col justify-center items-center space-y-4">
-        <h1 className="text-4xl text-black">LE.IO</h1>
-        <p className="max-w-[660px] text-center mb-6 text-black">
+      <div className='container mx-auto flex flex-col justify-center items-center space-y-4 my-20'>
+        <h1 className='text-4xl text-black'>LE.IO</h1>
+        <p className='max-w-[660px] text-center mb-6 text-black'>
           Paste your text in the space bellow. Any other instruction would go
           here as well as usual. Instructions should be crucial & good
         </p>
-        <div className="flex space-x-8">
-          <div
-            style={{ background: color }}
-            className="rounded-full w-8 h-8 cursor-pointer rotate-90"
-          >
+        <div className='flex flex-col md:flex-row space-x-8'>
+          <div className='rounded-full w-8 h-8 cursor-pointer rotate-90'>
             {<TwitterPicker onChange={handleColorChange} />}
           </div>
           <form>
@@ -100,9 +96,9 @@ function App() {
               html={mapHTML(html)}
               disabled={false}
               onChange={handleChange}
-              tagName="p"
-              className="text-black max-w-[800px] min-h-[200px] border p-4"
-              style={{ minWidth: "20rem" }}
+              tagName='p'
+              className='text-black max-w-[800px] min-h-[200px] border p-4'
+              style={{ minWidth: '40rem' }}
               onKeyDown={handleKeyPress}
             />
           </form>
