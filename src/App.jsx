@@ -77,14 +77,16 @@ function App() {
     if (event.key === 'ArrowUp') {
       if (selectedLine - 1 >= 0) setSelectedLine(selectedLine - 1);
     }
+    if(event.key === "Enter") {
+      setSelectedLine(null);
+    }
   };
   return (
     <div>
       <div className='container mx-auto flex flex-col justify-center items-center space-y-4 my-20'>
         <h1 className='text-4xl text-black'>LE.IO</h1>
         <p className='max-w-[660px] text-center mb-6 text-black'>
-          Paste your text in the space bellow. Any other instruction would go
-          here as well as usual. Instructions should be crucial & good
+          Enter your text bellow
         </p>
         <div className='flex flex-col md:flex-row space-x-8'>
           <div className='rounded-full w-8 h-8 cursor-pointer rotate-90'>
